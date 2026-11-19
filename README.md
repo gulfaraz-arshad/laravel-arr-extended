@@ -4,11 +4,11 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/gulfaraz-arshad/laravel-arr-extended.svg?style=flat-square)](https://packagist.org/packages/gulfaraz-arshad/laravel-arr-extended)
 [![License](https://img.shields.io/packagist/l/gulfaraz-arshad/laravel-arr-extended.svg?style=flat-square)](https://packagist.org/packages/gulfaraz-arshad/laravel-arr-extended)
 
-Extended Arr helpers for Laravel — filling the small gaps that Laravel's built-in `Arr` class doesn't cover.
+Extended Arr helpers for Laravel, filling the small gaps that Laravel's built-in `Arr` class doesn't cover.
 
 ## Why This Package?
 
-Laravel's `Arr` class provides helpful methods like `Arr::first()` and `Arr::last()` — but there's no clean way to get the value *after* a given value in an array. This package fills that gap.
+Laravel's `Arr` class provides helpful methods like `Arr::first()` and `Arr::last()`, but there's no clean way to get the value *after* a given value in an array. This package fills that gap.
 
 > I originally submitted this as a PR to the Laravel framework. Taylor decided to keep the framework minimal, so I released it as a standalone package instead.
 
@@ -23,6 +23,8 @@ Laravel's `Arr` class provides helpful methods like `Arr::first()` and `Arr::las
 composer require gulfaraz-arshad/laravel-arr-extended
 ```
 
+📖 **Deep Dive:** Read the full story behind Laravel PR #60081, edge cases, and implementation details on my blog: [Arr::after() in Laravel: Filling the Gap with laravel-arr-extended](https://gulfaraz.me/blog/laravel-arr-extended.html)
+
 ## Available Methods
 
 ### `Arr::after()`
@@ -35,7 +37,7 @@ use GulfarazArshad\LaravelArrExtended\Arr;
 Arr::after(array $array, mixed $value, bool $wrap = false): mixed
 ```
 
-#### Basic Usage
+### Basic Usage
 
 ```php
 // Returns the value after 'a'
@@ -51,7 +53,7 @@ Arr::after(['a', 'b', 'c'], 'z'); // null
 Arr::after([], 'a'); // null
 ```
 
-#### With `wrap` Flag
+### With `wrap` Flag
 
 ```php
 // Last element wraps to first
@@ -61,17 +63,17 @@ Arr::after(['a', 'b', 'c'], 'c', wrap: true); // 'a'
 Arr::after(['a', 'b', 'c'], 'z', wrap: true); // 'a'
 ```
 
-#### Associative Arrays
+### Associative Arrays
 
 ```php
 // Works with associative arrays
 Arr::after(['x' => 'a', 'y' => 'b'], 'a'); // 'b'
 ```
 
-#### Type Safety
+### Type Safety
 
 ```php
-// Strict comparison — no type juggling
+// Strict comparison, no type juggling
 Arr::after([1, 2, 3], '1'); // null (string !== integer)
 Arr::after([1, 2, 3], 1);   // 2 ✅
 ```
@@ -79,6 +81,7 @@ Arr::after([1, 2, 3], 1);   // 2 ✅
 ## Real World Examples
 
 **Step wizard:**
+
 ```php
 $steps = ['personal', 'address', 'payment', 'confirm'];
 
@@ -87,6 +90,7 @@ $done = Arr::after($steps, 'confirm'); // null — wizard complete!
 ```
 
 **Carousel navigation:**
+
 ```php
 $slides = ['home', 'about', 'contact'];
 
@@ -94,6 +98,7 @@ $next = Arr::after($slides, 'contact', wrap: true); // 'home'
 ```
 
 **Round-robin load balancing:**
+
 ```php
 $servers = ['server1', 'server2', 'server3'];
 
@@ -101,6 +106,7 @@ $next = Arr::after($servers, 'server3', wrap: true); // 'server1'
 ```
 
 **Day of week rotation:**
+
 ```php
 $days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
